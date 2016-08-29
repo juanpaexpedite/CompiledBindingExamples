@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="Examples.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Examples.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:Universal.Common"
+    xmlns:m="using:Examples.Models"
+    xmlns:vm="using:Examples.ViewModels"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <vm:SectionsViewModel x:Key="ViewModel" x:Name="ViewModel"/>
+
+        <c:DoubleProperty  x:Name="HeaderFontSize" x:Key="HeaderFontSize" Value="24.0"/>
+        <c:DoubleProperty x:Name="DescriptionFontSize" x:Key="DescriptionFontSize" Value="14.0"/>
+        <c:GenericProperty x:Name="BackgroundCellColor" x:Key="BackgroundCellColor">
+            <c:GenericProperty.Value>
+                <SolidColorBrush Color="#FFFF8C00"/>
+            </c:GenericProperty.Value>
+        </c:GenericProperty>
+
+        <DataTemplate x:Key="SampleTemplate" x:DataType="m:Section">
+            <Grid Width="440" Background="{x:Bind (Brush)local:MainView.Current.BackgroundCellColor.Value, Mode=OneWay}">
+                <StackPanel >
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"  FontSize="{x:Bind local:MainView.Current.HeaderFontSize.Value, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Light" />
+                    <TextBlock Text="{x:Bind Description, Mode=OneWay}" TextWrapping="Wrap"  FontSize="{x:Bind local:MainView.Current.DescriptionFontSize.Value, Mode=OneWay}" VerticalAlignment="Top"  Margin="0,4,0,0" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStates" >
+                <VisualState x:Name="Full">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DescriptionFontSize.Value" Value="12"/>
+                        <Setter Target="HeaderFontSize.Value" Value="18"/>
+                        <Setter Target="BackgroundCellColor.Value">
+                            <Setter.Value>
+                                <SolidColorBrush Color="#FFC30052"/>
+                            </Setter.Value>
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <GridView  ItemsSource="{x:Bind ViewModel.Sections, Mode=OneWay}" ItemTemplate="{StaticResource SampleTemplate}" >
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    <Setter Property="Margin" Value="0"></Setter>
+                </Style>
+            </GridView.ItemContainerStyle>
+        </GridView>
+
+    </Grid>
+</Page>
