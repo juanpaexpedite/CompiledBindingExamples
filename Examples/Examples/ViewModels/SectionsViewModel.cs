@@ -22,10 +22,11 @@ namespace Examples.ViewModels
 
             for (int i=0;i<10;i++)
             {
-                Sections.Add(new Section($"Section {i}", RandomDescription));
+                Sections.Add(new Section(i,$"Section {i}", RandomDescription));
             }
         }
 
         private string RandomDescription = "Pellentesque dictum, eros sit amet laoreet sodales, enim nibh sollicitudin mi, at suscipit magna arcu non felis. In hac habitasse platea dictumst. Sed lobortis, elit in accumsan lacinia, diam libero vehicula elit, at sollicitudin nisi est eu ligula. Praesent at facilisis mauris.";
+     
     }
 }

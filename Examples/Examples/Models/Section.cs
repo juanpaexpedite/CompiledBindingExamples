@@ -11,13 +11,20 @@ namespace Examples.Models
     /// </summary>
     public class Section
     {
-        public Section(string name, string description)
+        public Section(int id, string name, string description)
         {
+            Id = id;
             Name = name;
             Description = description;
         }
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
     }
 }

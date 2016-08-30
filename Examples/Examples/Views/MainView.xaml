@@ -8,6 +8,7 @@
     xmlns:c="using:Universal.Common"
     xmlns:m="using:Examples.Models"
     xmlns:vm="using:Examples.ViewModels"
+    xmlns:ctl="using:Universal.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -29,6 +30,31 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
+
+        <ctl:ItemTemplateSelector x:Name="CustomSelector" x:Key="CustomSelector" >
+            <ctl:ItemTemplateSelector.EvenTemplate>
+                <DataTemplate x:DataType="m:Section">
+                    <Grid Width="440" Background="{x:Bind (Brush)local:MainView.Current.BackgroundCellColor.Value, Mode=OneWay}">
+                        <StackPanel >
+                            <TextBlock Text="{x:Bind Id}" Foreground="Red"/>
+                            <TextBlock Text="{x:Bind Name, Mode=OneWay}"  FontSize="{x:Bind local:MainView.Current.HeaderFontSize.Value, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Light" />
+                            <TextBlock Text="{x:Bind Description, Mode=OneWay}" TextWrapping="Wrap"  FontSize="{x:Bind local:MainView.Current.DescriptionFontSize.Value, Mode=OneWay}" VerticalAlignment="Top"  Margin="0,4,0,0" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ctl:ItemTemplateSelector.EvenTemplate>
+            <ctl:ItemTemplateSelector.OddTemplate>
+                <DataTemplate x:DataType="m:Section">
+                    <Grid Width="440" Background="{x:Bind (Brush)local:MainView.Current.BackgroundCellColor.Value, Mode=OneWay}">
+                        <StackPanel >
+                            <TextBlock Text="{x:Bind Id}" Foreground="Blue"/>
+                            <TextBlock Text="{x:Bind Name, Mode=OneWay}"  FontSize="{x:Bind local:MainView.Current.HeaderFontSize.Value, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Light" />
+                            <TextBlock Text="{x:Bind Description, Mode=OneWay}" TextWrapping="Wrap"  FontSize="{x:Bind local:MainView.Current.DescriptionFontSize.Value, Mode=OneWay}" VerticalAlignment="Top"  Margin="0,4,0,0" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ctl:ItemTemplateSelector.OddTemplate>
+        </ctl:ItemTemplateSelector>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -57,7 +83,8 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <GridView  ItemsSource="{x:Bind ViewModel.Sections, Mode=OneWay}" ItemTemplate="{StaticResource SampleTemplate}" >
+        <!--<GridView  ItemsSource="{x:Bind ViewModel.Sections, Mode=OneWay}" ItemTemplate="{StaticResource SampleTemplate}" >-->
+        <GridView  ItemsSource="{x:Bind ViewModel.Sections, Mode=OneWay}" ItemTemplateSelector="{StaticResource CustomSelector}" >
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

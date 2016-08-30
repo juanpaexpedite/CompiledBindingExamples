@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Common\DoubleProperty.cs" />
     <Compile Include="Common\GenericProperty.cs" />
+    <Compile Include="Controls\ItemTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Universal.rd.xml" />
   </ItemGroup>
